@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Dolar Blue",
+    "internal_name": "usdblue",
+    "buy_price": 293,
+    "sell_price": 284,
+    "update_at": ""
+  },
+  {
+    "name": "Dolar Turista",
+    "internal_name": "usdtarjeta",
+    "buy_price": 294,
+    "sell_price": 284,
+    "update_at": ""
+  },
+  {
+    "name": "Dolar Bolsa",
+    "internal_name": "usdbolsa",
+    "buy_price": 301,
+    "sell_price": 294,
+    "update_at": ""
+  },
+  {
+    "name": "Dolar CCL",
+    "internal_name": "usdccl",
+    "buy_price": 304,
+    "sell_price": 298,
+    "update_at": ""
+  },
+  {
+    "name": "Binance USDT",
+    "internal_name": "usdt",
+    "buy_price": 288,
+    "sell_price": 268,
+    "update_at": ""
+  },
+  {
+    "name": "Binance DAI",
+    "internal_name": "dai",
+    "buy_price": 294,
+    "sell_price": 284,
+    "update_at": ""
+  }
+]
