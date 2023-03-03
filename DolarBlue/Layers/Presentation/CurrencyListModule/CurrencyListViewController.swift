@@ -6,8 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 class CurrencyListViewController: UIViewController, CurrencyListView {
+    
+    var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .large)
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.color = .white
+        return activity
+    }()
     
     var collectionView: UICollectionView!
     var refControl: UIRefreshControl = {
@@ -18,6 +26,7 @@ class CurrencyListViewController: UIViewController, CurrencyListView {
     
     var presenter: CurrencyListPresenter?
     
+    private var cancellables = Set<AnyCancellable>()
     private var currencies: [CurrencyPresentationModel] = []
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -48,32 +57,73 @@ class CurrencyListViewController: UIViewController, CurrencyListView {
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         collectionView.register(UINib(nibName: "CurrencySmallCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CurrencyBox")
         collectionView.register(UINib(nibName: "CurrencyFeaturedCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "FeaturedBox")
-        
+
         view.addSubview(collectionView)
-        
+
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = UIColor(named: "Background")
         collectionView.allowsSelection = false
-        
+
         refControl.addTarget(self, action: #selector(handleRefresh(refreshControl:)), for: UIControl.Event.valueChanged)
         collectionView.addSubview(refControl)
+        collectionView.isHidden = false
+        
+        view.addSubview(activityIndicator)
+        activityIndicator.stopAnimating()
         
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.getCurrencies()
+        
+        presenter?.currencyObjectsPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] currencies in
+                self?.updateCurrencyList(currencies)
+            })
+            .store(in: &cancellables)
+        
+        presenter?.viewStatePublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] appState in
+                self?.updateStateUI(appState)
+            })
+            .store(in: &cancellables)
+    }
+    
+    func updateStateUI(_ state: ViewState) {
+        switch state {
+        case .loading:
+            self.loadingStateUI()
+        case .loaded:
+            self.loadedStateUI()
+        default: break
+        }
+    }
+    
+    private func loadingStateUI() {
+        collectionView.isHidden = true
+        activityIndicator.startAnimating()
+    }
+    
+    private func loadedStateUI() {
+        activityIndicator.stopAnimating()
+        collectionView.isHidden = false
     }
     
     func updateCurrencyList(_ currencies: [CurrencyPresentationModel]) {
@@ -82,6 +132,17 @@ class CurrencyListViewController: UIViewController, CurrencyListView {
             self.collectionView.reloadData()
             self.refControl.endRefreshing()
         }
+    }
+    
+    func errorAlert(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let acceptAction = UIAlertAction(title: "Accept", style: .cancel)
+        let retryAction = UIAlertAction(title: "Retry", style: .default) { action in
+            self.presenter?.getCurrencies()
+        }
+        alertController.addAction(acceptAction)
+        alertController.addAction(retryAction)
+        self.present(alertController, animated: true)
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {

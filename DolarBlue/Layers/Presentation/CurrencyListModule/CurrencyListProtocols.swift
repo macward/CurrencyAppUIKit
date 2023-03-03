@@ -6,6 +6,13 @@
 //
 
 import Foundation
+import Combine
+
+enum ViewState: Equatable {
+    case idle
+    case loading
+    case loaded
+}
 
 protocol CurrencyListView: AnyObject{
     func updateCurrencyList(_ currencies: [CurrencyPresentationModel])
@@ -16,6 +23,8 @@ protocol CurrencyListInteractor: AnyObject {
 }
 
 protocol CurrencyListPresenter: AnyObject {
+    var currencyObjectsPublisher: AnyPublisher<[CurrencyPresentationModel], Never> { get }
+    var viewStatePublisher: AnyPublisher<ViewState, Never> { get }
     func getCurrencies()
     func operationSuccess(_ objects: [CurrencyPresentationModel])
     func operationFailure(_ error: APIError)

@@ -20,7 +20,6 @@ class CurrencyListBuilder {
         
         let viewController = CurrencyListViewController(presenter: presenter)
         
-        presenter.view = viewController
         presenter.interactor = interactor
         
         interactor.presenter = presenter

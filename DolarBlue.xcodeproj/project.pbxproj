@@ -422,8 +422,8 @@
 			children = (
 				50D0E01C28A2E6BB00C1892D /* Cell */,
 				5069A4BE289F857000CCFB65 /* CurrencyListViewController.swift */,
-				5069A4D628A0D25D00CCFB65 /* CurrencyListInteractor.swift */,
 				50D0E01128A20B1C00C1892D /* CurrencyListPresenter.swift */,
+				5069A4D628A0D25D00CCFB65 /* CurrencyListInteractor.swift */,
 				50D0E01528A2D82C00C1892D /* CurrencyListProtocols.swift */,
 				50D0E01328A20B2900C1892D /* CurrencyListBuilder.swift */,
 			);
