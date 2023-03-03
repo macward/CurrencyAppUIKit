@@ -212,6 +212,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5013890229B224D3008720DB /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				501388A929B1746B008720DB /* CurrencyRemoteMockDataSoruce.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		505CFC7F29AFEED100A0A3C4 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,9 +232,9 @@
 		505CFC8329B0196000A0A3C4 /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
+				5013890229B224D3008720DB /* Mocks */,
 				505CFC8629B0199200A0A3C4 /* CurrencyRemoteDataSource.swift */,
 				505CFC8829B019A300A0A3C4 /* CurrencyLocalDataSoruce.swift */,
-				501388A929B1746B008720DB /* CurrencyRemoteMockDataSoruce.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";

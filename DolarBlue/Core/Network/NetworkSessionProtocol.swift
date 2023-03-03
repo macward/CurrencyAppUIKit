@@ -17,7 +17,7 @@ class NetworkSession: NSObject, NetworkSessionProtocol {
     
     public override convenience init() {
         let sessionConfiguration = URLSessionConfiguration.default
-        sessionConfiguration.timeoutIntervalForRequest = 30
+        sessionConfiguration.timeoutIntervalForRequest = 10
         sessionConfiguration.waitsForConnectivity = true
         self.init(configuration: sessionConfiguration)
     }

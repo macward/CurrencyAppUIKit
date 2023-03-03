@@ -26,9 +26,10 @@ class RequestDispatcher {
     /// Ejecuta una request basada en el protocolo Request Protocol y devuelve la respuesta decodificada en un objeto Codable
     /// En caso de error, lanzara un ApiError
     func execute<T: Codable>(urlRequest: RequestProtocol, of type: T.Type) async throws -> T? {
-        guard let request = urlRequest.buildRequest() else {
+        guard var request = urlRequest.buildRequest() else {
             throw APIError.badRequest("Bad Request")
         }
+        request.timeoutInterval = 10
         let (data, response) = try await networkSession.data(request: request)
         let verifyData = verify(data: data, of: T.self, urlResponse: response as! HTTPURLResponse)
         switch verifyData {
