@@ -8,7 +8,6 @@
 import Foundation
 
 protocol CurrencyDataSource {
-    
-    func fetchAll() async throws -> [CurrencyPresentationModel]?
+    func fetchAll() async throws -> [CurrencyDataObject]?
     func store(_ objects: [CurrencyDataObject]?) async throws
 }

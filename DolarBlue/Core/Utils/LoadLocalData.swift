@@ -17,7 +17,7 @@ final class LoadLocalData {
     ///
     static func fromJson<T: Codable>(withName name: String, of type: T.Type) async throws -> T? {
         guard let url = Bundle.main.url(forResource: name, withExtension: "json") else {
-            throw APIError.noData
+            throw APIError.emptyData
         }
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()

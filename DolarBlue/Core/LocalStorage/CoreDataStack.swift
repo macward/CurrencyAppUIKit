@@ -77,7 +77,7 @@ class CoreDataStack {
             try context.execute(batchDeleteRequest)
         } catch {
             // Lanza una excepción si no se pudieron borrar los objetos.
-            throw APIError.noData
+            throw APIError.emptyData
         }
 
     }

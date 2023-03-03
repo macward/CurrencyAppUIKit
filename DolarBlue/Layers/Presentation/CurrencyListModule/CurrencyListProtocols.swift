@@ -17,6 +17,6 @@ protocol CurrencyListInteractor: AnyObject {
 
 protocol CurrencyListPresenter: AnyObject {
     func getCurrencies()
-    func updateAvailableCurrencies(_ currencies: [CurrencyPresentationModel])
-    func handleError(message: String)
+    func operationSuccess(_ objects: [CurrencyPresentationModel])
+    func operationFailure(_ error: APIError)
 }

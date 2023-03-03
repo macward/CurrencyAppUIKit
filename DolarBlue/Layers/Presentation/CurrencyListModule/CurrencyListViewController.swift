@@ -85,11 +85,7 @@ class CurrencyListViewController: UIViewController, CurrencyListView {
     }
     
     @objc func handleRefresh(refreshControl: UIRefreshControl) {
-       DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
-           DispatchQueue.main.async {
-               self.presenter?.getCurrencies()
-           }
-       }
+        presenter?.getCurrencies()
    }
 
 }

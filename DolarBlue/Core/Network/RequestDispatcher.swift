@@ -8,10 +8,10 @@
 import Foundation
 
 enum APIError: Error, Equatable {
-    case noData
+    case emptyData
     case invalidResponse
+    case serverError
     case badRequest(String?)
-    case serverError(String?)
     case parseError(String?)
     case unknown
 }
@@ -54,12 +54,12 @@ class RequestDispatcher {
                     return .failure(APIError.parseError("error decoding data"))
                 }
             } else {
-                return .failure(APIError.noData)
+                return .failure(APIError.emptyData)
             }
         case 400...499:
-            return .failure(APIError.badRequest(""))
+            return .failure(APIError.badRequest("no anda"))
         case 500...599:
-            return .failure(APIError.serverError(""))
+            return .failure(APIError.serverError)
         default:
             return .failure(APIError.unknown)
         }

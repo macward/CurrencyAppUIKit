@@ -12,14 +12,15 @@ class CurrencyListPresenterDefault: CurrencyListPresenter {
     var view: CurrencyListView!
     var interactor: CurrencyListInteractor!
     
-    func updateAvailableCurrencies(_ currencies: [CurrencyPresentationModel]) {
-        view.updateCurrencyList(currencies)
-    }
-    
     func getCurrencies() {
         self.interactor.getCurrencies()
     }
-    func handleError(message: String) {
-        print(message)
+    
+    func operationSuccess(_ objects: [CurrencyPresentationModel]) {
+        view.updateCurrencyList(objects)
+    }
+    
+    func operationFailure(_ error: APIError) {
+        print(error.localizedDescription)
     }
 }

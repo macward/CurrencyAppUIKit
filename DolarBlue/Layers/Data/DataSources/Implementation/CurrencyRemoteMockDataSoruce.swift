@@ -1,16 +1,30 @@
 //
-//  CurrencyLocalDataSoruce.swift
+//  CurrencyRemoteMockDataSoruce.swift
 //  DolarBlue
 //
-//  Created by Max Ward on 01/03/2023.
+//  Created by Max Ward on 02/03/2023.
 //
 
 import Foundation
 
-class CurrencyLocalDataSoruce: CurrencyDataSource {
+protocol CurrencyRemoteMockDataSourceProtocol: CurrencyDataSource {
+    var localFileName: String { get set}
+    func setFileName(_ name: String)
+}
+
+class CurrencyRemoteMockDataSource: CurrencyRemoteMockDataSourceProtocol {
+    var localFileName: String = "currencies"
+    
+    init(fileName: String) {
+        self.localFileName = fileName
+    }
+    
+    func setFileName(_ name: String) {
+        self.localFileName = name
+    }
     
     func fetchAll() async throws -> [CurrencyDataObject]? {
-        guard let data = try await LoadLocalData.fromJson(withName: "currencies", of: [CurrencyDataObject].self) else {
+        guard let data = try await LoadLocalData.fromJson(withName: self.localFileName, of: [CurrencyDataObject].self) else {
             throw APIError.emptyData
         }
         return data
@@ -36,4 +50,6 @@ class CurrencyLocalDataSoruce: CurrencyDataSource {
             throw APIError.serverError
         }
     }
+    
+    
 }

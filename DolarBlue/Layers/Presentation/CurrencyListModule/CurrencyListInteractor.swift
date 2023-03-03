@@ -25,11 +25,9 @@ class CurrencyListInteractorDefault: CurrencyListInteractor {
     private func makeRequest() async {
         do {
             guard let response = try await self.useCase.getListOfCurrencies() else { return }
-            presenter?.updateAvailableCurrencies(response)
-        } catch APIError.noData {
-            presenter?.handleError(message: "Error obteniendo datos")
-        } catch {
-            presenter?.handleError(message: "generic error")
+            self.presenter?.operationSuccess(response)
+        } catch (let error) {
+            self.presenter?.operationFailure(error as! APIError)
         }
         
     }

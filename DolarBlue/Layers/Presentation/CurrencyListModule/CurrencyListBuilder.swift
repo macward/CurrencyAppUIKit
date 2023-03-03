@@ -13,6 +13,7 @@ class CurrencyListBuilder {
         
         let repository = CurrencyRepositoryDefault(remoteDataSource: CurrencyRemoteDataSource(),
                                                    localDataSource: CurrencyLocalDataSoruce())
+        
         let useCase = CurrencyUseCaseDefault(repository: repository)
         let interactor = CurrencyListInteractorDefault(useCase: useCase)
         let presenter = CurrencyListPresenterDefault()

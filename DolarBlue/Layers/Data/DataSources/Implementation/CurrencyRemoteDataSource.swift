@@ -9,16 +9,20 @@ import Foundation
 
 class CurrencyRemoteDataSource: CurrencyDataSource {
     
-    func fetchAll() async throws -> [CurrencyPresentationModel]? {
+    private lazy var dispatcher = RequestDispatcher(networkSession: NetworkSession())
+    
+    func fetchAll() async throws -> [CurrencyDataObject]? {
         
-        guard let data = try await LoadLocalData.fromJson(withName: "currencies", of: [CurrencyDataObject].self) else {
-            throw APIError.noData
+        // Crea una solicitud de API para recuperar todas las divisas
+        let request = CurrencyEndpoints.all
+
+        // Ejecuta la solicitud usando el dispatcher de solicitudes
+        guard let result = try await dispatcher.execute(urlRequest: request, of: [CurrencyDataObject].self) else {
+            throw APIError.emptyData
         }
-        var converted: [CurrencyPresentationModel] = []
-        for item in data {
-            converted.append(CurrencyPresentationModel(currency: item))
-        }
-        return converted
+        
+        return result
+        
     }
     
     func store(_ objects: [CurrencyDataObject]?) async throws {

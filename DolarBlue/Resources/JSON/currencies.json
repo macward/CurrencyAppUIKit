@@ -2,8 +2,9 @@
   {
     "name": "Dolar Blue",
     "internal_name": "usdblue",
-    "buy_price": 293,
-    "sell_price": 284,
+    "buy_price": 300,
+    "sell_price": 290,
+    "previous_price": 282,
     "update_at": ""
   },
   {
@@ -11,13 +12,23 @@
     "internal_name": "usdtarjeta",
     "buy_price": 294,
     "sell_price": 284,
+    "previous_price": 290,
+    "update_at": ""
+  },
+  {
+    "name": "Dolar Oficial",
+    "internal_name": "usdoficial",
+    "buy_price": 111,
+    "sell_price": 294,
+    "previous_price": 290,
     "update_at": ""
   },
   {
     "name": "Dolar Bolsa",
     "internal_name": "usdbolsa",
-    "buy_price": 301,
+    "buy_price": 100,
     "sell_price": 294,
+    "previous_price": 290,
     "update_at": ""
   },
   {
@@ -25,6 +36,7 @@
     "internal_name": "usdccl",
     "buy_price": 304,
     "sell_price": 298,
+    "previous_price": 290,
     "update_at": ""
   },
   {
@@ -32,13 +44,23 @@
     "internal_name": "usdt",
     "buy_price": 288,
     "sell_price": 268,
+    "previous_price": 290,
     "update_at": ""
   },
   {
     "name": "Binance DAI",
     "internal_name": "dai",
-    "buy_price": 294,
-    "sell_price": 284,
+    "buy_price": 500,
+    "sell_price": 290,
+    "previous_price": 290,
+    "update_at": ""
+  },
+  {
+    "name": "Sample Currency",
+    "internal_name": "dai",
+    "buy_price": 500,
+    "sell_price": 290,
+    "previous_price": 290,
     "update_at": ""
   }
 ]
